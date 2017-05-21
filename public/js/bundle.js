@@ -190,11 +190,7 @@ var Footer = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'col-sm-5' },
-              _react2.default.createElement(
-                'p',
-                null,
-                '\xA9 2017'
-              )
+              _react2.default.createElement('p', null)
             ),
             _react2.default.createElement('div', { className: 'col-sm-7' })
           )
@@ -337,7 +333,7 @@ var Navbar = function (_React$Component) {
           _react2.default.createElement(
             _reactRouter.Link,
             { to: '/', className: 'navbar-brand' },
-            'Boilerplate'
+            'Common Cents'
           )
         ),
         _react2.default.createElement(

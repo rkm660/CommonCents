@@ -1,10 +1,10 @@
 {
-  "name": "mern_boilerplate",
-  "description": "Starter for MERN apps",
+  "name": "common_cents",
+  "description": "Raffle-based crowdfunding for non-profits.",
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rkm660/MERN.git"
+    "url": ""
   },
   "main": "server.js",
   "scripts": {

@@ -34,7 +34,7 @@ class Navbar extends React.Component {
             <span className='icon-bar'></span>
           </button>
           <Link to='/' className='navbar-brand'>
-            Boilerplate
+            Common Cents
           </Link>
         </div>
         <div id='navbar' className='navbar-collapse collapse'>
