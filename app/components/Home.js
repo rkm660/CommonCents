@@ -1,35 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import GoogleMapReact from 'google-map-react';
+import Raffle from './Raffle';
 
 
 class Home extends React.Component {
   render() {
     return (
-	    <div className="map">
-		      <GoogleMapReact
-		      	bootstrapURLKeys={{
-		    		key: 'AIzaSyAdqfAwbQF958j96OH54VTZijOfZtHWeDI',
-		    		language: 'us',
-		  		}}
-		        defaultCenter={this.props.center}
-		        defaultZoom={this.props.zoom}
-		      >
-		      </GoogleMapReact>
-	    </div>
+    	<div className="row">
+    		<div className="col-sm-4">
+    		
+    		</div>
+    		<div className="col-sm-8">	
+    			<Raffle/>
+    		</div>
+    	</div>
     );
   }
 }
 
-Home.defaultProps = {
-    center: [59.938043, 30.337157],
-    zoom: 9,
-};
-
-Home.propTypes = {
-    center: PropTypes.array,
-    zoom: PropTypes.number,
-};
 
 
 
