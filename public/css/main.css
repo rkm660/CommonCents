@@ -7295,6 +7295,15 @@ body {
   margin-bottom: 220px;
   -webkit-font-smoothing: antialiased;
 }
+.map {
+  width: calc(100% - 10px);
+  height: 500px;
+  margin: 0 auto;
+  display: block;
+}
+.login-profile {
+  margin-right: 30px;
+}
 footer {
   position: absolute;
   bottom: 0;
@@ -7489,6 +7498,7 @@ footer .thumb-md:hover {
 }
 .navbar {
   border: 0;
+  margin-bottom: 0px;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05);
 }
 .navbar-default .navbar-brand {
