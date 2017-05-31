@@ -11,6 +11,8 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var session = require('express-session')
+
 
 //DB
 var dbConfig = require('./db.js');
@@ -31,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 mongoose.connect(dbConfig.url);
 
 //Authentication
+app.use(session({ resave: true, 'saveUninitialized' : true, secret: 'secret' }));
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new FacebookStrategy({
@@ -58,13 +61,11 @@ passport.use(new FacebookStrategy({
                             throw err;
                         return done(null, newUser);
                     })
-                    console.log(profile);
                 }
             });
         });
     }
 ));
-
 
 app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' }));
@@ -77,12 +78,6 @@ passport.deserializeUser(function(id, done) {
         done(err, user);
     });
 });
-
-app.get('/logout', function(req, res){
-    req.logout();
-    res.redirect('/');
-})
-
 
 //General routing
 app.use(function(req, res) {
