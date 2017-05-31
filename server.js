@@ -1,7 +1,7 @@
 // Babel ES6/JSX Compiler
 require('babel-register');
 
-var swig  = require('swig');
+var swig = require('swig');
 var React = require('react');
 var ReactDOM = require('react-dom/server');
 var Router = require('react-router');
@@ -17,8 +17,8 @@ var dbConfig = require('./db.js');
 var mongoose = require('mongoose');
 var User = require('./models/User.js')
 
-var passport = require('passport')
-  , FacebookStrategy = require('passport-facebook').Strategy;
+var passport = require('passport'),
+    FacebookStrategy = require('passport-facebook').Strategy;
 
 var app = express();
 
@@ -34,48 +34,73 @@ mongoose.connect(dbConfig.url);
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new FacebookStrategy({
-    clientID: "308085112938841",
-    clientSecret: "b15bb2a156617f86c6c99fcda1246f55",
-    callbackURL: "http://localhost:3000/auth/facebook/callback",
-  },
-  function(accessToken, refreshToken, profile, done) {
-      console.log(accessToken, refreshToken, profile, done);
-      done(null, profile);
-  }
+        clientID: "308085112938841",
+        clientSecret: "b15bb2a156617f86c6c99fcda1246f55",
+        callbackURL: "http://localhost:3000/auth/facebook/callback",
+        profileFields: ["id", "birthday", "email", "first_name", "gender", "last_name"]
+    },
+    function(accessToken, refreshToken, profile, done) {
+        process.nextTick(function() {
+            User.findOne({ 'userID': profile.id }, function(err, user) {
+                if (err)
+                    return done(err);
+                if (user)
+                    return done(null, user);
+                else {
+                    var newUser = new User();
+                    newUser.userID = profile.id;
+                    newUser.token = accessToken;
+                    newUser.first_name = profile.name.givenName;
+                    newUser.last_name = profile.name.familyName;
+                    newUser.email = profile.emails[0].value;
+                    newUser.save(function(err) {
+                        if (err)
+                            throw err;
+                        return done(null, newUser);
+                    })
+                    console.log(profile);
+                }
+            });
+        });
+    }
 ));
 
-app.get('/auth/facebook', passport.authenticate('facebook'));
-app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { successRedirect: '/',
-                                      failureRedirect: '/login'}));
+
+app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}));
+app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' }));
 
 passport.serializeUser(function(user, done) {
-  done(null, user);
+    done(null, user.id);
+});
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+        done(err, user);
+    });
 });
 
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
+app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
+})
 
 
-
+//General routing
 app.use(function(req, res) {
-  Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {
-    if (err) {
-      res.status(500).send(err.message)
-    } else if (redirectLocation) {
-      res.status(302).redirect(redirectLocation.pathname + redirectLocation.search)
-    } else if (renderProps) {
-      var html = ReactDOM.renderToString(React.createElement(Router.RoutingContext, renderProps));
-      var page = swig.renderFile('views/index.html', { html: html });
-      res.status(200).send(page);
-    }
-     else {
-      res.status(404).send('Page Not Found')
-    }
-  });
+    Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {
+        if (err) {
+            res.status(500).send(err.message)
+        } else if (redirectLocation) {
+            res.status(302).redirect(redirectLocation.pathname + redirectLocation.search)
+        } else if (renderProps) {
+            var html = ReactDOM.renderToString(React.createElement(Router.RoutingContext, renderProps));
+            var page = swig.renderFile('views/index.html', { html: html });
+            res.status(200).send(page);
+        } else {
+            res.status(404).send('Page Not Found')
+        }
+    });
 });
 
 app.listen(app.get('port'), function() {
-  console.log('Express server listening on port ' + app.get('port'));
+    console.log('Express server listening on port ' + app.get('port'));
 });
