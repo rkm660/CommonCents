@@ -46,7 +46,7 @@ class Navbar extends React.Component {
             <li><Link to='/page'>Contact</Link></li>
           </ul>
           <ul className="nav navbar-nav navbar-right login-profile">
-            <li><Link to='/page'>Login</Link></li>
+            <li><a href="/auth/facebook">Login</a></li>
           </ul>
         </div>
       </nav>

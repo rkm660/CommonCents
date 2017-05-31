@@ -479,8 +479,8 @@ var Navbar = function (_React$Component) {
               'li',
               null,
               _react2.default.createElement(
-                _reactRouter.Link,
-                { to: '/page' },
+                'a',
+                { href: '/auth/facebook' },
                 'Login'
               )
             )

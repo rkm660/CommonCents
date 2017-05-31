@@ -12,6 +12,14 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
+//DB
+var dbConfig = require('./db.js');
+var mongoose = require('mongoose');
+var User = require('./models/User.js')
+
+var passport = require('passport')
+  , FacebookStrategy = require('passport-facebook').Strategy;
+
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
@@ -19,6 +27,36 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+mongoose.connect(dbConfig.url);
+
+//Authentication
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new FacebookStrategy({
+    clientID: "308085112938841",
+    clientSecret: "b15bb2a156617f86c6c99fcda1246f55",
+    callbackURL: "http://localhost:3000/auth/facebook/callback",
+  },
+  function(accessToken, refreshToken, profile, done) {
+      console.log(accessToken, refreshToken, profile, done);
+      done(null, profile);
+  }
+));
+
+app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { successRedirect: '/',
+                                      failureRedirect: '/login'}));
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
 
 
 app.use(function(req, res) {
@@ -31,7 +69,8 @@ app.use(function(req, res) {
       var html = ReactDOM.renderToString(React.createElement(Router.RoutingContext, renderProps));
       var page = swig.renderFile('views/index.html', { html: html });
       res.status(200).send(page);
-    } else {
+    }
+     else {
       res.status(404).send('Page Not Found')
     }
   });
