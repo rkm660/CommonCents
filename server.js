@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 mongoose.connect(dbConfig.url);
 
 //Authentication
-app.use(session({ resave: true, 'saveUninitialized' : true, secret: 'secret' }));
+app.use(session({ resave: true, 'saveUninitialized': true, secret: 'secret' }));
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new FacebookStrategy({
@@ -67,8 +67,23 @@ passport.use(new FacebookStrategy({
     }
 ));
 
-app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}));
-app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' }));
+app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+app.get('/auth/facebook/callback', function(req, res, next) {
+    passport.authenticate('facebook', function(err, user, info) {
+        if (err) {
+            return next(err); }
+        if (!user) {
+            return res.redirect('/login'); }
+        req.logIn(user, function(err) {
+            if (err) {
+                return next(err); }
+            return res.redirect('/page');
+        });
+    })(req, res, next);
+});
+
+
+
 
 passport.serializeUser(function(user, done) {
     done(null, user.id);
@@ -79,13 +94,9 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
-app.get('/logout', function(req, res){
+app.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');
-});
-
-app.get('/logged_in', function(req, res){
-    res.send(req["user"]);
 });
 
 //General routing
