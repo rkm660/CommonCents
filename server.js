@@ -79,6 +79,15 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
+app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
+});
+
+app.get('/logged_in', function(req, res){
+    res.send(req["user"]);
+});
+
 //General routing
 app.use(function(req, res) {
     Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {
