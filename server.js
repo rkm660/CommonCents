@@ -12,6 +12,7 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var session = require('express-session')
+var cookieParser = require('cookie-parser')
 
 
 //DB
@@ -29,6 +30,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser())
 
 mongoose.connect(dbConfig.url);
 
@@ -45,6 +47,7 @@ passport.use(new FacebookStrategy({
     function(accessToken, refreshToken, profile, done) {
         process.nextTick(function() {
             User.findOne({ 'userID': profile.id }, function(err, user) {
+                console.log(profile);
                 if (err)
                     return done(err);
                 if (user)
@@ -73,17 +76,19 @@ app.get('/auth/facebook/callback', function(req, res, next) {
         if (err) {
             return next(err); }
         if (!user) {
-            return res.redirect('/login'); }
+            return res.redirect('/'); }
         req.logIn(user, function(err) {
             if (err) {
                 return next(err); }
+            res.cookie("current_user", user.userID);
             return res.redirect('/page');
         });
     })(req, res, next);
 });
 
-
-
+app.get('/current_user', function(req, res){
+    res.send(req.cookies.current_user);
+});
 
 passport.serializeUser(function(user, done) {
     done(null, user.id);
@@ -96,6 +101,7 @@ passport.deserializeUser(function(id, done) {
 
 app.get('/logout', function(req, res) {
     req.logout();
+    res.clearCookie("current_user");
     res.redirect('/');
 });
 
