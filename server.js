@@ -42,7 +42,7 @@ passport.use(new FacebookStrategy({
         clientID: "308085112938841",
         clientSecret: "b15bb2a156617f86c6c99fcda1246f55",
         callbackURL: "http://localhost:3000/auth/facebook/callback",
-        profileFields: ["id", "birthday", "email", "first_name", "gender", "last_name"]
+        profileFields: ["id", "birthday", "email", "first_name", "gender", "last_name"],
     },
     function(accessToken, refreshToken, profile, done) {
         process.nextTick(function() {
@@ -70,7 +70,7 @@ passport.use(new FacebookStrategy({
     }
 ));
 
-app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email']}));
 app.get('/auth/facebook/callback', function(req, res, next) {
     passport.authenticate('facebook', function(err, user, info) {
         if (err) {

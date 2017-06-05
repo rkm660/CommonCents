@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import NavbarStore from '../stores/NavbarStore';
 import NavbarActions from '../actions/NavbarActions';
-
+import LoginButton from './LoginButton';
 
 class Navbar extends React.Component {
 
@@ -23,7 +23,6 @@ class Navbar extends React.Component {
   onChange(state) {
     this.setState(state);
   }
-
 
   render() {
     return (
@@ -48,12 +47,14 @@ class Navbar extends React.Component {
             <li><Link to='/page'>Contact</Link></li>
           </ul>
           <ul className="nav navbar-nav navbar-right login-profile">
-            <li><a href="/auth/facebook">Login</a></li>
+              <LoginButton/>
           </ul>
         </div>
       </nav>
     );
   }
 }
+
+
 
 export default Navbar;
