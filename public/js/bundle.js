@@ -329,6 +329,8 @@ var _AuthStore = require('../stores/AuthStore');
 
 var _AuthStore2 = _interopRequireDefault(_AuthStore);
 
+var _reactRouter = require('react-router');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -372,11 +374,36 @@ var LoginButton = function (_React$Component) {
       if (this.state.current_user) {
         return _react2.default.createElement(
           'li',
-          null,
+          { className: 'dropdown' },
           _react2.default.createElement(
             'a',
-            { href: '/logout' },
-            'Logout'
+            { href: '#', className: 'dropdown-toggle', 'data-toggle': 'dropdown' },
+            'Welcome, ',
+            this.state.current_user.first_name,
+            '! ',
+            _react2.default.createElement('span', { className: 'caret' })
+          ),
+          _react2.default.createElement(
+            'ul',
+            { className: 'dropdown-menu' },
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement(
+                _reactRouter.Link,
+                { to: '/page' },
+                'My Profile'
+              )
+            ),
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement(
+                'a',
+                { href: '/logout' },
+                'Logout'
+              )
+            )
           )
         );
       } else {
@@ -398,7 +425,7 @@ var LoginButton = function (_React$Component) {
 
 exports.default = LoginButton;
 
-},{"../actions/AuthActions":1,"../stores/AuthStore":15,"react":"react"}],9:[function(require,module,exports){
+},{"../actions/AuthActions":1,"../stores/AuthStore":15,"react":"react","react-router":"react-router"}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

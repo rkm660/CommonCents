@@ -1,6 +1,8 @@
 import React from 'react';
 import AuthActions from '../actions/AuthActions';
 import AuthStore from '../stores/AuthStore';
+import {Link} from 'react-router';
+
 
 class LoginButton extends React.Component {
 
@@ -25,9 +27,15 @@ class LoginButton extends React.Component {
 
   render() {
   	if (this.state.current_user){
-  		return <li><a href="/logout">Logout</a></li>;
-  	}
-  	else {
+        return    (<li className='dropdown'>
+                      <a href='#' className='dropdown-toggle' data-toggle='dropdown'>Welcome, {this.state.current_user.first_name}! <span className='caret'></span></a>
+                      <ul className='dropdown-menu'>
+                        <li><Link to='/page'>My Profile</Link></li>
+                        <li><a href="/logout">Logout</a></li>
+                      </ul>
+                  </li>);
+  	 }
+    else {
    		return <li><a href="/auth/facebook">Login</a></li>;
   	}
   }
