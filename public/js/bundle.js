@@ -369,7 +369,7 @@ var LoginButton = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (this.state.current_user && this.state.current_user.length > 0) {
+      if (this.state.current_user) {
         return _react2.default.createElement(
           'li',
           null,
@@ -815,13 +815,13 @@ var AuthStore = function () {
     _classCallCheck(this, AuthStore);
 
     this.bindActions(_AuthActions2.default);
-    this.current_user = "";
+    this.current_user = {};
   }
 
   _createClass(AuthStore, [{
     key: 'onGetCurrentUser',
     value: function onGetCurrentUser() {
-      this.current_user = "";
+      this.current_user = {};
     }
   }, {
     key: 'onGetCurrentUserSuccess',

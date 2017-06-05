@@ -5,11 +5,11 @@ import AuthActions from '../actions/AuthActions';
 class AuthStore {
   constructor() {
     this.bindActions(AuthActions);
-    this.current_user = "";
+    this.current_user = {};
   }
 
   onGetCurrentUser(){
-    this.current_user = "";
+    this.current_user = {};
   }
 
   onGetCurrentUserSuccess(data) {

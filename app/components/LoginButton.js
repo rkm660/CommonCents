@@ -24,7 +24,7 @@ class LoginButton extends React.Component {
   }
 
   render() {
-  	if (this.state.current_user && this.state.current_user.length > 0){
+  	if (this.state.current_user){
   		return <li><a href="/logout">Logout</a></li>;
   	}
   	else {

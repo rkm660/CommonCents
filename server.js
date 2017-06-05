@@ -80,14 +80,13 @@ app.get('/auth/facebook/callback', function(req, res, next) {
         req.logIn(user, function(err) {
             if (err) {
                 return next(err); }
-            res.cookie("current_user", user.userID);
             return res.redirect('/page');
         });
     })(req, res, next);
 });
 
 app.get('/current_user', function(req, res){
-    res.send(req.cookies.current_user);
+    res.send(req.user);
 });
 
 passport.serializeUser(function(user, done) {
@@ -101,7 +100,6 @@ passport.deserializeUser(function(id, done) {
 
 app.get('/logout', function(req, res) {
     req.logout();
-    res.clearCookie("current_user");
     res.redirect('/');
 });
 
