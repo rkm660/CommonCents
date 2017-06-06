@@ -6,13 +6,8 @@ import Raffle from './Raffle';
 class Home extends React.Component {
   render() {
     return (
-    	<div className="row">
-    		<div className="col-sm-4">
-    		
-    		</div>
-    		<div className="col-sm-8">	
-    			<Raffle/>
-    		</div>
+    	<div className="row map-container">		
+    		<Raffle/>
     	</div>
     );
   }

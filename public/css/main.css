@@ -7300,6 +7300,10 @@ body {
   margin: 0 auto;
   display: inline-block;
 }
+.map-container {
+  margin-left: 0;
+  margin-right: 0;
+}
 .login-profile {
   margin-right: 30px;
 }

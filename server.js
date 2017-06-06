@@ -42,12 +42,12 @@ passport.use(new FacebookStrategy({
         clientID: "308085112938841",
         clientSecret: "b15bb2a156617f86c6c99fcda1246f55",
         callbackURL: "http://localhost:3000/auth/facebook/callback",
-        profileFields: ["id", "birthday", "email", "first_name", "gender", "last_name"],
+        profileFields: ["id", "birthday", "email", "first_name", "gender", "last_name", "location", "hometown"],
     },
     function(accessToken, refreshToken, profile, done) {
         process.nextTick(function() {
             User.findOne({ 'userID': profile.id }, function(err, user) {
-                console.log(profile);
+                console.log(profile._json.location, "**");
                 if (err)
                     return done(err);
                 if (user)
@@ -59,6 +59,8 @@ passport.use(new FacebookStrategy({
                     newUser.first_name = profile.name.givenName;
                     newUser.last_name = profile.name.familyName;
                     newUser.email = profile.emails[0].value;
+                    newUser.location = profile._json.location.name;
+                    newUser.hometown = profile._json.hometown.name;
                     newUser.save(function(err) {
                         if (err)
                             throw err;
@@ -70,7 +72,7 @@ passport.use(new FacebookStrategy({
     }
 ));
 
-app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email']}));
+app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'user_location', 'user_hometown']}));
 app.get('/auth/facebook/callback', function(req, res, next) {
     passport.authenticate('facebook', function(err, user, info) {
         if (err) {

@@ -292,13 +292,8 @@ var Home = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'row' },
-        _react2.default.createElement('div', { className: 'col-sm-4' }),
-        _react2.default.createElement(
-          'div',
-          { className: 'col-sm-8' },
-          _react2.default.createElement(_Raffle2.default, null)
-        )
+        { className: 'row map-container' },
+        _react2.default.createElement(_Raffle2.default, null)
       );
     }
   }]);
