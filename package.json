@@ -6,10 +6,10 @@
     "type": "git",
     "url": ""
   },
-  "main": "server.js",
+  "main": "server/main.js",
   "scripts": {
-    "start": "node server.js",
-    "watch": "nodemon server.js"
+    "start": "node server/main.js",
+    "watch": "nodemon server/main.js"
   },
   "babel": {
     "presets": [

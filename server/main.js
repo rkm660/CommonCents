@@ -5,7 +5,7 @@ var swig = require('swig');
 var React = require('react');
 var ReactDOM = require('react-dom/server');
 var Router = require('react-router');
-var routes = require('./app/routes');
+var routes = require('../app/routes');
 
 var express = require('express');
 var path = require('path');
@@ -29,7 +29,7 @@ app.set('port', process.env.PORT || 3000);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname.substring(0, __dirname.length-7), '/public')));
 app.use(cookieParser())
 
 mongoose.connect(dbConfig.url);
@@ -47,7 +47,6 @@ passport.use(new FacebookStrategy({
     function(accessToken, refreshToken, profile, done) {
         process.nextTick(function() {
             User.findOne({ 'userID': profile.id }, function(err, user) {
-                console.log(profile._json.location, "**");
                 if (err)
                     return done(err);
                 if (user)
@@ -107,7 +106,15 @@ app.get('/logout', function(req, res) {
 
 //General routing
 app.use(function(req, res) {
+    var url;
+    if (req.url.includes('css') || req.url.includes('js')){
+        url = req.url.substring(1, req.url.length);
+    }
+    else {
+        url = req.url;
+    }
     Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {
+        console.log(url);
         if (err) {
             res.status(500).send(err.message)
         } else if (redirectLocation) {
