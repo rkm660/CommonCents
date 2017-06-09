@@ -11,12 +11,12 @@ class Profile extends React.Component {
 
   componentDidMount() {
     UserStore.listen(this.onChange);
-    UserActions.getUser(this.props.params.id);
+    //UserActions.getUser(this.props.params.id);
   }
 
   componentWillUnmount() {
     UserStore.unlisten(this.onChange);
-    //$(document.body).removeClass();
+    $(document.body).removeClass();
   }
 
   componentDidUpdate(prevProps) {

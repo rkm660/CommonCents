@@ -30,7 +30,7 @@ class LoginButton extends React.Component {
         return    (<li className='dropdown'>
                       <a href='#' className='dropdown-toggle' data-toggle='dropdown'>Welcome, {this.state.current_user.first_name}! <span className='caret'></span></a>
                       <ul className='dropdown-menu'>
-                        <li><Link to='/page'>My Profile</Link></li>
+                        <li><Link to='/profile'>My Profile</Link></li>
                         <li><a href="/logout">Logout</a></li>
                       </ul>
                   </li>);

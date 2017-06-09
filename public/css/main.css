@@ -7348,82 +7348,6 @@ footer .thumb-md:hover {
 /*
  * Character profile page styles.
  */
-.profile {
-  color: #fff;
-  background-size: cover;
-}
-.profile.amarr {
-  background-image: url('/img/amarr_bg.jpg');
-}
-.profile.caldari {
-  background-image: url('/img/caldari_bg.jpg');
-}
-.profile.gallente {
-  background-image: url('/img/gallente_bg.jpg');
-}
-.profile.minmatar {
-  background-image: url('/img/minmatar_bg.jpg');
-}
-.profile footer {
-  color: #fff;
-  background: transparent;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-}
-.profile .navbar-default {
-  background-color: transparent;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: none;
-}
-.profile .navbar-default .navbar-brand {
-  color: #fff;
-}
-.profile .form-control {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.15);
-  border-right: 0;
-}
-.profile .form-control:focus {
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.055), 0 0 8px rgba(255, 255, 255, 0.3);
-}
-.profile .input-group-btn:last-child > .btn {
-  margin-left: 0;
-}
-.profile .btn-default {
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.15);
-  -webkit-transition: background-color 0.3s;
-  transition: background-color 0.3s;
-}
-.profile .btn-default:focus,
-.profile .btn-default:hover {
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.3);
-}
-.profile .tri {
-  border-top-color: #fff;
-}
-.profile .tri.invert {
-  border-bottom-color: #fff;
-}
-.profile .navbar-default .navbar-nav > .open > a,
-.profile .navbar-default .navbar-nav > .open > a:hover,
-.profile .navbar-default .navbar-nav > .open > a:focus {
-  background-color: rgba(255, 255, 255, 0.15);
-}
-.profile .navbar-default .navbar-nav > li > a:hover,
-.profile .navbar-default .navbar-nav > li > a:focus {
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.15);
-}
-.profile .navbar-default .navbar-nav > li > a {
-  color: #fff;
-}
-.profile footer .col-sm-5 {
-  border-right: 1px solid rgba(255, 255, 255, 0.15);
-}
 .table {
   font-size: inherit;
 }
@@ -7598,11 +7522,6 @@ label {
   height: 256px;
   box-shadow: 0 2px 25px rgba(0, 0, 0, 0.25);
 }
-.profile-info {
-  margin: 0 0 20px 286px;
-  max-width: 405px;
-  color: #fff;
-}
 .btn-transparent {
   border: 1px solid white;
   border-radius: 3px;
@@ -7620,14 +7539,6 @@ label {
   color: #fff;
   background-color: rgba(255, 255, 255, 0.3);
 }
-.profile-stats {
-  margin: 30px 0 30px 0;
-  padding: 20px 0;
-  border-top: 1px solid #2098ca;
-  border-bottom: 1px solid #2098ca;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-}
 @media (max-width: 510px) {
   .profile-stats {
     font-size: 12px;
@@ -7640,7 +7551,6 @@ label {
 }
 .profile-stats {
   display: block;
-  color: #fff;
 }
 .profile-stats ul {
   list-style-type: none;
